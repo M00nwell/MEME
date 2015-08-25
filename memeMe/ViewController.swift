@@ -21,9 +21,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topBar: UIToolbar!
     @IBOutlet weak var bottomBar: UIToolbar!
     
+    @IBOutlet weak var colorButton: UIButton!
+    
     let imagePickVC = UIImagePickerController()
     
-    let memeTextAttributes = [
+    let colors = [UIColor.whiteColor(),UIColor.redColor(),UIColor.orangeColor(),UIColor.yellowColor(),UIColor.greenColor(),UIColor.blueColor(),UIColor.purpleColor(),UIColor.grayColor(),UIColor.blackColor()]
+    
+    var colorIndex = 0
+    
+    var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
         NSForegroundColorAttributeName  : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
@@ -41,14 +47,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePickVC.delegate = self
         topText.delegate = self
         bottomText.delegate = self
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
-        topText.textAlignment = NSTextAlignment.Center
-        bottomText.textAlignment = NSTextAlignment.Center
+        redrawText()
         topText.text = "TOP"
         bottomText.text = "BOTTOM"
         shareButton.enabled = false
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -83,6 +85,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         shareButton.enabled = false
         topText.text = "TOP"
         bottomText.text = "BOTTOM"
+        colorIndex = 0
+        redrawText()
+    }
+    
+    @IBAction func changeColor(sender: UIButton) {
+        colorIndex++
+        if(colorIndex >= colors.count){
+            colorIndex = 0
+        }
+        redrawText()
+    }
+    
+    func redrawText(){
+        colorButton.backgroundColor = colors[colorIndex]
+        memeTextAttributes[NSForegroundColorAttributeName] = colors[colorIndex]
+        topText.defaultTextAttributes = memeTextAttributes
+        bottomText.defaultTextAttributes = memeTextAttributes
+        topText.textAlignment = NSTextAlignment.Center
+        bottomText.textAlignment = NSTextAlignment.Center
     }
     
     // UIImagePickerControllerDelegate
@@ -107,6 +128,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     ///////////////////////////////////
     
+    
+    // To shift view up when editing bottom textfield
     func keyboardWillShow(notification: NSNotification){
         if(bottomText.isFirstResponder()){
             self.view.frame.origin.y -= getKeyboardHeight(notification)
@@ -134,6 +157,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
+    ////////////////////////////////////
     
     func generateMemedImage() -> UIImage {
         

@@ -58,6 +58,22 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zqR-5W-5ib"/>
+                                    <barButtonItem style="plain" id="6dh-4B-oKH">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0rG-lM-qhw">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="changeColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="eUc-5w-wPl"/>
+                                            </connections>
+                                        </button>
+                                        <connections>
+                                            <action selector="changeColor:" destination="vXZ-lx-hvc" id="nty-dm-TGY"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="gwT-1H-wbT"/>
                                 </items>
                             </toolbar>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="she-7Y-qoW">
@@ -151,6 +167,7 @@
                         <outlet property="bottomBar" destination="xbn-L7-AsU" id="Pg1-ru-JgQ"/>
                         <outlet property="bottomText" destination="cM1-of-Mev" id="qKg-1T-Dih"/>
                         <outlet property="camButton" destination="Fsi-Cq-fQZ" id="fOc-0L-H2n"/>
+                        <outlet property="colorButton" destination="0rG-lM-qhw" id="mXA-F5-iLy"/>
                         <outlet property="imageView" destination="4Ya-Bu-oQD" id="ScH-RC-ciP"/>
                         <outlet property="shareButton" destination="k6S-DY-EoM" id="8Il-ao-WLP"/>
                         <outlet property="topBar" destination="4rJ-EM-mJ5" id="PXU-Wu-ldM"/>
