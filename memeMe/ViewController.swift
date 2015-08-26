@@ -73,11 +73,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func pickPhoto(sender: UIBarButtonItem) {
 
         imagePickVC.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePickVC, animated: true, completion: nil)
+        presentViewController(imagePickVC, animated: true, completion: nil)
     }
     @IBAction func takePhoto(sender: UIBarButtonItem) {
         imagePickVC.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(imagePickVC, animated: true, completion: nil)
+        presentViewController(imagePickVC, animated: true, completion: nil)
     }
     
     @IBAction func cancel(sender: UIBarButtonItem) {
@@ -137,9 +137,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func keyboardWillHide(notification: NSNotification){
-        if(bottomText.isFirstResponder()){
-            self.view.frame.origin.y += getKeyboardHeight(notification)
-        }
+            self.view.frame.origin.y = 0
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -180,21 +178,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func save() {
         //Create the meme
-        var meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imageView.image!, memedImage: generateMemedImage())
+        var meme = Meme(memedImage: generateMemedImage(), topText: topText.text, bottomText: bottomText.text, originalImage: imageView.image!)
     }
 
 }
 
-class Meme {
+struct Meme {
     var memedImage: UIImage
     var topText: String
     var bottomText: String
     var originalImage: UIImage
-    
-    init(topText: String, bottomText: String, image: UIImage, memedImage: UIImage){
-        self.memedImage = memedImage
-        self.topText = topText
-        self.bottomText = bottomText
-        self.originalImage = image
-    }
 }
