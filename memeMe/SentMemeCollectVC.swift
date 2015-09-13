@@ -20,8 +20,8 @@ class SentMemeCollectVC: UICollectionViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.hidden = false
-        self.collectionView?.reloadData()
+        tabBarController?.tabBar.hidden = false
+        collectionView?.reloadData()
     }
     
     override func viewDidLoad() {
@@ -60,13 +60,13 @@ class SentMemeCollectVC: UICollectionViewController {
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
         detailController.meme = memes[indexPath.row]
         detailController.memeIndex = indexPath.row
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
         
     }
     
     @IBAction func newMeMe(sender: UIBarButtonItem) {
-        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! ViewController
-        self.navigationController!.pushViewController(memeController, animated: true)
+        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
+        navigationController!.pushViewController(memeController, animated: true)
     }
     
 }

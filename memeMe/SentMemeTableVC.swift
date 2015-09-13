@@ -19,13 +19,13 @@ class SentMemeTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     //Table View Data Source///////////////////
@@ -52,13 +52,13 @@ class SentMemeTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
         detailController.meme = self.memes[indexPath.row]
         detailController.memeIndex = indexPath.row
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
         
     }
     
     @IBAction func newMeMe(sender: UIBarButtonItem) {
-        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! ViewController
-        self.navigationController!.pushViewController(memeController, animated: true)
+        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
+        navigationController!.pushViewController(memeController, animated: true)
     }
 }
 

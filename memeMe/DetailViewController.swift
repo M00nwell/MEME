@@ -20,25 +20,25 @@ class DetailViewController : UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tabBarController?.tabBar.hidden = true
-        self.imageView!.image = meme.memedImage
+        tabBarController?.tabBar.hidden = true
+        imageView!.image = meme.memedImage
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.hidden = false
+        tabBarController?.tabBar.hidden = false
     }
     
     @IBAction func editMeme(sender: UIBarButtonItem) {
-        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! ViewController
+        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
         memeController.meme = self.meme
-        self.navigationController!.pushViewController(memeController, animated: true)
+        navigationController!.pushViewController(memeController, animated: true)
     }
     
     @IBAction func deleteMeme(sender: UIBarButtonItem) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.memes.removeAtIndex(memeIndex)
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        navigationController?.popToRootViewControllerAnimated(true)
     }
     
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class NewMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var camButton: UIBarButtonItem!
@@ -39,10 +39,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     ]
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         camButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotification()
-        self.tabBarController?.tabBar.hidden = true
-        self.navigationController?.navigationBarHidden = true
+        tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -69,8 +69,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotification()
-        self.tabBarController?.tabBar.hidden = false
-        self.navigationController?.navigationBarHidden = false
+        tabBarController?.tabBar.hidden = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -103,7 +102,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        imageView.image = nil
+        shareButton.enabled = false
+        topText.text = "TOP"
+        bottomText.text = "BOTTOM"
+        colorIndex = 0
+        redrawText()
     }
     
     @IBAction func changeColor(sender: UIButton) {
@@ -127,8 +131,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            self.imageView.image = image
-            self.shareButton.enabled = true
+            imageView.image = image
+            shareButton.enabled = true
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -136,7 +140,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.text = ""
+        if(topText.isFirstResponder() && textField.text == "TOP")||(bottomText.isFirstResponder() && textField.text == "BOTTOM"){
+            textField.text = ""
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -149,12 +155,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // To shift view up when editing bottom textfield
     func keyboardWillShow(notification: NSNotification){
         if(bottomText.isFirstResponder()){
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
     
     func keyboardWillHide(notification: NSNotification){
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
