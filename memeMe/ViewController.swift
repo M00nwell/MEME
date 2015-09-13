@@ -23,6 +23,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var colorButton: UIButton!
     
+    var meme: Meme!
+    
     let imagePickVC = UIImagePickerController()
     
     let colors = [UIColor.whiteColor(),UIColor.redColor(),UIColor.orangeColor(),UIColor.yellowColor(),UIColor.greenColor(),UIColor.blueColor(),UIColor.purpleColor(),UIColor.grayColor(),UIColor.blackColor()]
@@ -39,6 +41,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillAppear(animated: Bool) {
         camButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotification()
+        self.tabBarController?.tabBar.hidden = true
+        self.navigationController?.navigationBarHidden = true
     }
     
     override func viewDidLoad() {
@@ -48,14 +52,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topText.delegate = self
         bottomText.delegate = self
         redrawText()
-        topText.text = "TOP"
-        bottomText.text = "BOTTOM"
-        shareButton.enabled = false
+        if let meme = meme{
+            topText.text = meme.topText
+            bottomText.text = meme.bottomText
+            imageView.image = meme.originalImage
+            colorIndex = meme.textColorIndex
+            redrawText()
+        }
+        else{
+            topText.text = "TOP"
+            bottomText.text = "BOTTOM"
+            shareButton.enabled = false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotification()
+        self.tabBarController?.tabBar.hidden = false
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 
     @IBAction func shareImage(sender: UIBarButtonItem) {
@@ -63,8 +82,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let activityVC = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         activityVC.completionWithItemsHandler = {
             (s: String!, ok: Bool, items: [AnyObject]!, err:NSError!) -> Void in
-            self.save()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            if ok {
+                self.save()
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            }
         }
         
         self.presentViewController(activityVC, animated: true, completion: nil)
@@ -81,12 +103,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        imageView.image = nil
-        shareButton.enabled = false
-        topText.text = "TOP"
-        bottomText.text = "BOTTOM"
-        colorIndex = 0
-        redrawText()
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     @IBAction func changeColor(sender: UIButton) {
@@ -178,7 +195,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func save() {
         //Create the meme
-        var meme = Meme(memedImage: generateMemedImage(), topText: topText.text, bottomText: bottomText.text, originalImage: imageView.image!)
+        var meme = Meme(memedImage: generateMemedImage(), topText: topText.text, bottomText: bottomText.text, originalImage: imageView.image!, textColorIndex: colorIndex)
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
 
 }
@@ -188,4 +208,5 @@ struct Meme {
     var topText: String
     var bottomText: String
     var originalImage: UIImage
+    var textColorIndex: Int
 }
