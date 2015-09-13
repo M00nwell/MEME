@@ -30,8 +30,8 @@ class DetailViewController : UIViewController {
     }
     
     @IBAction func editMeme(sender: UIBarButtonItem) {
-        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
-        memeController.meme = self.meme
+        let memeController = storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
+        memeController.meme = meme
         navigationController!.pushViewController(memeController, animated: true)
     }
     

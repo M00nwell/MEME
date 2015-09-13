@@ -88,7 +88,7 @@ class NewMemeViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
         }
         
-        self.presentViewController(activityVC, animated: true, completion: nil)
+        presentViewController(activityVC, animated: true, completion: nil)
     }
 
     @IBAction func pickPhoto(sender: UIBarButtonItem) {
@@ -186,8 +186,8 @@ class NewMemeViewController: UIViewController, UIImagePickerControllerDelegate, 
         bottomBar.hidden = true
         
         // Render view to an image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawViewHierarchyInRect(self.view.frame,
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame,
             afterScreenUpdates: true)
         let memedImage : UIImage =
         UIGraphicsGetImageFromCurrentImageContext()

@@ -28,8 +28,8 @@ class SentMemeCollectVC: UICollectionViewController {
         super.viewDidLoad()
         
         let space: CGFloat = 3.0
-        let w = (self.view.frame.size.width - (2 * space)) / 3.0
-        let h = (self.view.frame.size.height - (2 * space)) / 5.0
+        let w = (view.frame.size.width - (2 * space)) / 3.0
+        let h = (view.frame.size.height - (2 * space)) / 5.0
         
         flowLayout.minimumInteritemSpacing = space
         flowLayout.itemSize = CGSizeMake(w, h)
@@ -57,7 +57,7 @@ class SentMemeCollectVC: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath)
     {
         
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
         detailController.meme = memes[indexPath.row]
         detailController.memeIndex = indexPath.row
         navigationController!.pushViewController(detailController, animated: true)
@@ -65,7 +65,7 @@ class SentMemeCollectVC: UICollectionViewController {
     }
     
     @IBAction func newMeMe(sender: UIBarButtonItem) {
-        let memeController = self.storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
+        let memeController = storyboard!.instantiateViewControllerWithIdentifier("memeController") as! NewMemeViewController
         navigationController!.pushViewController(memeController, animated: true)
     }
     
