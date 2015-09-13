@@ -6,11 +6,11 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Table-->
         <scene sceneID="mBS-Dz-HiV">
             <objects>
                 <navigationController id="vvQ-oD-ZMy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="mIM-mQ-nCB"/>
+                    <tabBarItem key="tabBarItem" title="Table" id="mIM-mQ-nCB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VDf-CE-m34">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -207,11 +207,11 @@
             </objects>
             <point key="canvasLocation" x="-1584" y="-114"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Collection-->
         <scene sceneID="mMP-gD-PcZ">
             <objects>
                 <navigationController id="qlS-Iz-dkr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="gK3-is-on5"/>
+                    <tabBarItem key="tabBarItem" title="Collection" id="gK3-is-on5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eHu-t7-7tl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
